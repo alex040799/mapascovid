@@ -1,0 +1,10 @@
+#map {
+	height: 500px;
+	width: 100%;
+}
+
+.dropup .dropdown-menu,.navbar-fixed-bottom .dropdown .dropdown-menu {
+      /*top: auto;*/
+      /*bottom: 100%;*/
+      margin-bottom: 2px;
+}

@@ -1,0 +1,30 @@
+.double-border-text {
+    $random-text: 'entire volume';
+    position: relative;
+    $stroke-width: $large * 0.2;
+    font-family: 'Pacifico', cursive;
+    text-transform: uppercase;
+    font-size: $extra-large;
+    color: white;
+    -webkit-text-stroke-width: $stroke-width;
+    -webkit-text-stroke-color: lighten(adjust-hue($yellow, -5%), 35%);
+
+    &:after {
+      content: $random-text;
+      position: absolute;
+      top: 0;
+      left: 0;
+      -webkit-text-stroke-width: 0;
+      color: $orange;
+    }
+    
+    &:before {
+      z-index: -1;
+      content: $random-text;
+      position: absolute;
+      top: 0;
+      left: 0;
+      -webkit-text-stroke-width: $stroke-width + 15px;
+      -webkit-text-stroke-color: $orange;
+    }
+  }

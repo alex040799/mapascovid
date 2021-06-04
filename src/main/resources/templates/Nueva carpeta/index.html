@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pagina principal</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-biohazard"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3"> Mapas Covid-19 </div>
+            </a>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+               Edición
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Crud</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Crud:</h6>
+                        <a class="collapse-item" href="/localidades">Localidades</a>
+                        <a class="collapse-item" href="/provincias">Provincias</a>
+                        <a class="collapse-item" href="/mapas">Mapas</a>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Mapas Covid-19</h1>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+                    
+						<div class="col-lg-3" th:object="${select}">
+						    <select class="form-control" id="mapaid" name="mapaid" select onchange="val(this)">
+						        <option value="0">Seleccione el mapa</option>
+						        <option th:each="mapa : ${mapas}"
+						                th:value="${mapa.id}"
+						                th:text="${mapa.nombre}"></option>
+						    </select>
+						</div>
+		
+		
+						<div id="testOrder" class="col-lg-3" th:object="${select}" style="display: none;">
+						    <select class="form-control" name="testOrder" select onchange=change_url(this.value)>
+						        <option value="">Selecione la provincia</option>
+						        <option th:each="provincia : ${select}"
+						                th:value="${provincia.nombre}"
+						                th:text="${provincia.nombre}"></option>
+						    </select>
+						</div>
+				
+				<br></br>
+				
+				<div id="map"></div>
+                       
+                    </div>
+
+                </div>
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <!-- <script src="js/demo/chart-area-demo.js"></script> -->
+
+	<script th:inline="javascript">
+	
+	var mapa;
+	
+	function val(select) {
+		  if(select.value!=0){
+			    document.getElementById('testOrder').style.display = "block";
+			  } else{
+			    document.getElementById('testOrder').style.display = "none";
+			  }
+		  
+	    mapa = document.getElementById("mapaid").value;
+	}
+	
+    function change_url(val) {
+        window.location="obtenerUnDato/?provincia=" + val + "&mapa="+ mapa;
+    }
+	
+    
+
+  	var tipo = /*[[${tipoMapa}]]*/;
+  	
+  	if (tipo == "perimetro"){
+  	console.log(tipo);
+  	
+  	
+    
+    function iniciarMap(){
+    	/*<![CDATA[*/
+  	  var map = new google.maps.Map(document.getElementById('map'), {
+  	    zoom: 5,
+  	    center: {
+  	      lat: 24.886,
+  	      lng: -70.268
+  	    },
+  	    mapTypeId: google.maps.MapTypeId.ROADMAP
+  	  });	
+  
+  /*[# th:each="page : ${markers}"]*/
+  	
+  
+  var str = /*[[${page.limites}]]*/;
+
+  var triangleCoords = [  ];
+		    
+  var arrayDeCadenas = str.split("],");
+  
+  console.log(triangleCoords);
+  
+  for (var i=0; i < arrayDeCadenas.length-1; i++) {
+	  var cosa = arrayDeCadenas[i] + "]";
+	  console.log(cosa);
+	  triangleCoords.push(eval(cosa));
+   }
+  	
+	console.log(triangleCoords);
+		  
+	
+  	  var points = [];
+  	  for (var i = 0; i < triangleCoords.length; i++) {
+  	    points.push({
+  	      lat: triangleCoords[i][1],
+  	      lng: triangleCoords[i][0]
+  	    });
+  	  }
+  	  
+  	 if (3 < /*[[${page.casos}]]*/){
+  		 var color = '#44d600';
+  	 } else if (2 < /*[[${page.casos}]]*/) {
+  		var color = '#44d600';
+  	 } else {
+  		var color = '#F40D09';
+  	 }
+		  // Construct the polygon.
+		  var bermudaTriangle = new google.maps.Polygon({
+		    paths: points,
+		    strokeColor: '#000000',
+		    strokeOpacity: 0.8,
+		    strokeWeight: 2,
+		    fillColor: color,
+		    fillOpacity: 0.35
+		  });
+		  bermudaTriangle.setMap(map);
+		   /*[/]*/
+			/*]]>*/
+		}
+  	} else {
+  		function iniciarMap(){
+  			/*<![CDATA[*/
+  			var map = new google.maps.Map(document.getElementById('map'),{
+  			      zoom: 9,
+  			      center: new google.maps.LatLng(/*[[${latitudProvincia}]]*/, /*[[${longitudProvincia}]]*/),
+  		    });
+  			
+  			    /*[# th:each="page : ${markers}"]*/
+  			        
+  			    if (1 < /*[[${page.casos}]]*/){
+  			    	icono = 'https://upload.wikimedia.org/wikipedia/commons/0/05/Green_Cross.png';
+  			    } else if (2 > /*[[${page.casos}]]*/) {
+  			    	icono = 'http://michaelminn.net/tutorials/google-thematic/blue-bubble-24.png';
+  			    } else {
+  			    	icono = 'http://michaelminn.net/tutorials/google-thematic/red-bubble-24.png';
+  			    }
+  		        marker = new google.maps.Marker({
+  		            position: new google.maps.LatLng(/*[[${page.latitud}]]*/, /*[[${page.longitud}]]*/),
+  		            map: map,
+  		            icon: {
+  		                url: icono,
+  		                scaledSize: new google.maps.Size(25, 25)
+  		
+  		            }
+  		        });
+  		       		    /*[/]*/
+  			/*]]>*/
+  		
+  		}
+  	}
+	</script>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDaeWicvigtP9xPv919E-RNoxfvC-Hqik&callback=iniciarMap"></script>
+</body>
+
+</html>
