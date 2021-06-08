@@ -366,160 +366,180 @@
          
          });
       </script>
+      
       <script th:inline="javascript">
-         var mapa;
-         
-         function val(select) {
-         	  if(select.value!=0){
-         		    document.getElementById('selectProvincia').style.display = "block";
-         		  } else{
-         		    document.getElementById('selectProvincia').style.display = "none";
-         		    document.getElementById('tablaDatosMapa').style.display = "none";
-         		  }
-         	  
-             mapa = document.getElementById("mapaid").value;
-         }
-         
-            function change_url(val) {
-                window.location="obtenerUnDato/?provincia=" + val + "&mapa="+ mapa;
-               
-            }
-         
-            /*<![CDATA[*/
-            	
-            
-            if (/*[[${datosmapas}]]*/ != null){
-            	 document.getElementById('tablaDatosMapa').style.display = "block";
-            }
-            	
-            /*]]>*/
-         
-          	var tipo = /*[[${tipoMapa}]]*/;
-          	
-          	
-          	if (tipo == "perimetro"){
-          	console.log(tipo);
-          	
-            function iniciarMap(){
-            	/*<![CDATA[*/
-          	  var map = new google.maps.Map(document.getElementById('map'), {
-          	    zoom: 9,
-          	    center: {
-          	      lat: /*[[${latitudProvincia}]]*/,
-          	      lng: /*[[${longitudProvincia}]]*/
-          	    },
-          	    mapTypeId: google.maps.MapTypeId.ROADMAP
-          	  });	
-          
-          /*[# th:each="page : ${markers}"]*/
-          	
-          var casos = /*[[${page.casos}]]*/;
-          
-          var poblacion = /*[[${page.poblacion}]]*/;
-          
-          var incidencia = (casos * 100000) / poblacion;
-                  
-          var str = /*[[${page.limites}]]*/;
-         
-          var triangleCoords = [  ];
-         	    
-          var arrayDeCadenas = str.split("],");
-          
-          console.log(triangleCoords);
-          
-          for (var i=0; i < arrayDeCadenas.length-1; i++) {
-           var cosa = arrayDeCadenas[i] + "]";
-           triangleCoords.push(eval(cosa));
-           }
-          	
-         console.log(triangleCoords);
-         	  
-         
-          	  var points = [];
-          	  for (var i = 0; i < triangleCoords.length; i++) {
-          	    points.push({
-          	      lat: triangleCoords[i][1],
-          	      lng: triangleCoords[i][0]
-          	    });
-          	  }
-          	  
-          	 if (50 > incidencia){
-          		 var color = '#44d600';
-          	 } else if (150 > incidencia) {
-          		var color = '#d6af00';
-          	 } else {
-          		var color = '#F40D09';
-          	 }
-         	  // Construct the polygon.
-         	  var bermudaTriangle = new google.maps.Polygon({
-         	    paths: points,
-         	    strokeColor: '#000000',
-         	    strokeOpacity: 0.8,
-         	    strokeWeight: 2,
-         	    fillColor: color,
-         	    fillOpacity: 0.35
-         	  });
-         	  bermudaTriangle.setMap(map);
-         	   /*[/]*/
-         		/*]]>*/
-         	}
-          	} else {
-          		function iniciarMap(){
-          			/*<![CDATA[*/
-          			var map = new google.maps.Map(document.getElementById('map'),{
-          			      zoom: 9,
-          			      center: new google.maps.LatLng(/*[[${latitudProvincia}]]*/, /*[[${longitudProvincia}]]*/),
-          		    });
-          			
-          			
-          			   /*[# th:each="page : ${markers}"]*/
-          			        
-          			  var casos = /*[[${page.casos}]]*/;
-          			  
-          			  var poblacion = /*[[${page.poblacion}]]*/;
-          			  
-          			  var incidencia = (casos * 100000) / poblacion;
-          			  
-          			  
-          			  icono = 'http://michaelminn.net/tutorials/google-thematic/red-bubble-24.png';
-          				
-          			  if (50 > incidencia){
-          				marker = new google.maps.Marker({
-             		         position: new google.maps.LatLng(/*[[${page.latitud}]]*/, /*[[${page.longitud}]]*/),
-             		          map: map,
-             		          icon: {
-             		              url: icono,
-             		              scaledSize: new google.maps.Size(15, 15)
-             		
-             		            }
-             		        });
-          			  } else if (150 > incidencia){
-          				marker = new google.maps.Marker({
-             		         position: new google.maps.LatLng(/*[[${page.latitud}]]*/, /*[[${page.longitud}]]*/),
-             		          map: map,
-             		          icon: {
-             		              url: icono,
-             		              scaledSize: new google.maps.Size(25, 25)
-             		
-             		            }
-             		        });
-          			  } else {
-          				marker = new google.maps.Marker({
-             		         position: new google.maps.LatLng(/*[[${page.latitud}]]*/, /*[[${page.longitud}]]*/),
-             		          map: map,
-             		          icon: {
-             		              url: icono,
-             		              scaledSize: new google.maps.Size(50, 50)
-             		
-             		            }
-             		        });
-          			  }
-          		     
-          		       		    /*[/]*/
-          			/*]]>*/
-          		
-          		}
-          	}
+      
+      var mapa;
+
+      function val(select) {
+          if (select.value != 0) {
+              document.getElementById('selectProvincia').style.display = "block";
+          } else {
+              document.getElementById('selectProvincia').style.display = "none";
+              document.getElementById('tablaDatosMapa').style.display = "none";
+          }
+
+          mapa = document.getElementById("mapaid").value;
+      }
+
+      function change_url(val) {
+          window.location = "obtenerUnDato/?provincia=" + val + "&mapa=" + mapa;
+
+      }
+
+      /*<![CDATA[*/
+
+
+      if ( /*[[${datosmapas}]]*/ != null) {
+          document.getElementById('tablaDatosMapa').style.display = "block";
+      }
+
+      /*]]>*/
+
+      var tipo = /*[[${tipoMapa}]]*/ ;
+
+      if (tipo == "perimetro") {
+          console.log(tipo);
+
+          function iniciarMap() {
+              /*<![CDATA[*/
+              var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 9,
+                  center: {
+                      lat: /*[[${latitudProvincia}]]*/ ,
+                      lng: /*[[${longitudProvincia}]]*/
+                  },
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+              });
+
+              /*[# th:each="page : ${markers}"]*/
+
+              var casos = /*[[${page.casos}]]*/ ;
+
+              var poblacion = /*[[${page.poblacion}]]*/ ;
+
+              var incidencia = (casos * 100000) / poblacion;
+
+              var str = /*[[${page.limites}]]*/ ;
+
+              function dibujarMapa(str) {
+                  console.log(str);
+                  var triangleCoords = [];
+
+                  var arrayDeCadenas = str.split("],");
+
+                  console.log(triangleCoords);
+
+                  for (var i = 0; i < arrayDeCadenas.length - 1; i++) {
+                      var cosa = arrayDeCadenas[i] + "]";
+                      triangleCoords.push(eval(cosa));
+                  }
+
+                  console.log(triangleCoords);
+
+
+                  var points = [];
+                  for (var i = 0; i < triangleCoords.length; i++) {
+                      points.push({
+                          lat: triangleCoords[i][1],
+                          lng: triangleCoords[i][0]
+                      });
+                  }
+
+                  if (50 > incidencia) {
+                      var color = '#44d600';
+                  } else if (150 > incidencia) {
+                      var color = '#d6af00';
+                  } else {
+                      var color = '#F40D09';
+                  }
+                  // Construct the polygon.
+                  var bermudaTriangle = new google.maps.Polygon({
+                      paths: points,
+                      strokeColor: '#000000',
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillColor: color,
+                      fillOpacity: 0.35
+                  });
+                  bermudaTriangle.setMap(map);
+              }
+
+              console.log(str);
+              if (str.includes("/")) {
+
+                  console.log("Incluye");
+                  var arrayDeCadenas = str.split("/");
+                  console.log("El array tiene " + arrayDeCadenas.length);
+
+                  for (var i = 0; i < arrayDeCadenas.length; i++) {
+                      dibujarMapa(arrayDeCadenas[i]);
+                  }
+              } else {
+                  console.log("No incluye");
+                  dibujarMapa(str)
+              }
+              /*[/]*/
+              /*]]>*/
+          }
+      } else {
+          function iniciarMap() {
+              /*<![CDATA[*/
+              var map = new google.maps.Map(document.getElementById('map'), {
+                  zoom: 9,
+                  center: new google.maps.LatLng( /*[[${latitudProvincia}]]*/ , /*[[${longitudProvincia}]]*/ ),
+              });
+
+
+              /*[# th:each="page : ${markers}"]*/
+
+              var casos = /*[[${page.casos}]]*/ ;
+
+              var poblacion = /*[[${page.poblacion}]]*/ ;
+
+              var incidencia = (casos * 100000) / poblacion;
+
+
+              icono = 'http://michaelminn.net/tutorials/google-thematic/red-bubble-24.png';
+
+              if (50 > incidencia) {
+                  marker = new google.maps.Marker({
+                      position: new google.maps.LatLng( /*[[${page.latitud}]]*/ , /*[[${page.longitud}]]*/ ),
+                      map: map,
+                      icon: {
+                          url: icono,
+                          scaledSize: new google.maps.Size(15, 15)
+
+                      }
+                  });
+              } else if (150 > incidencia) {
+                  marker = new google.maps.Marker({
+                      position: new google.maps.LatLng( /*[[${page.latitud}]]*/ , /*[[${page.longitud}]]*/ ),
+                      map: map,
+                      icon: {
+                          url: icono,
+                          scaledSize: new google.maps.Size(25, 25)
+
+                      }
+                  });
+              } else {
+                  marker = new google.maps.Marker({
+                      position: new google.maps.LatLng( /*[[${page.latitud}]]*/ , /*[[${page.longitud}]]*/ ),
+                      map: map,
+                      icon: {
+                          url: icono,
+                          scaledSize: new google.maps.Size(50, 50)
+
+                      }
+                  });
+              }
+
+              /*[/]*/
+              /*]]>*/
+
+          }
+      }  
+      
       </script>
       <!-- Bootstrap core JavaScript-->
       <script src="vendor/jquery/jquery.min.js"></script>
