@@ -172,7 +172,7 @@
 
 									<div class="form-group">
 										<label for="recipient-name" class="col-form-label">Casos:</label>
-										<input class="validanumericos" type=text id="casos" name="casos" required>
+										<input class="form-control" type="text" onkeypress='return validaNumericos(event)' id="casos" name="casos" required>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -222,7 +222,7 @@
 
 									<div class="form-group">
 										<label for="recipient-name" class="col-form-label">Casos:</label>
-										<input type="text" onkeypress='return validaNumericos(event)' id="casosEdit" name="casos" required>
+										<input class="form-control" type="text" onkeypress='return validaNumericos(event)' id="casosEdit" name="casos" required>
 									</div>
 
 								</div>
