@@ -222,7 +222,7 @@
 
 									<div class="form-group">
 										<label for="recipient-name" class="col-form-label">Casos:</label>
-										<input type="number" class="form-control" id="casosEdit" name="casos" required>
+										<input type="text" onkeypress='return validaNumericos(event)' id="casosEdit" name="casos" required>
 									</div>
 
 								</div>
@@ -330,15 +330,11 @@
 			        
 			 }
 			
-			onload = function(){ 
-				  var ele = document.querySelectorAll('.validanumericos')[0];
-				  ele.onkeypress = function(e) {
-				     if(isNaN(this.value+String.fromCharCode(e.charCode)))
-				        return false;
-				  }
-				  ele.onpaste = function(e){
-				     e.preventDefault();
-				  }
+			function validaNumericos(event) {
+			    if(event.charCode >= 48 && event.charCode <= 57){
+			      return true;
+			     }
+			     return false;        
 			}
 		</script>
 		<script>
@@ -524,7 +520,7 @@
 		<script src="js/sb-admin-2.min.js"></script>
 
 		<!-- Page level plugins -->
-		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+		<!--<script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
 		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 		<!-- Page level custom scripts -->
