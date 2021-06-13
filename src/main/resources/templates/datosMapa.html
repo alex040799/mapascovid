@@ -172,7 +172,7 @@
 
 									<div class="form-group">
 										<label for="recipient-name" class="col-form-label">Casos:</label>
-										<input type="text" class="form-control" id="casos" name="casos" required>
+										<input class="validanumericos" type=text id="casos" name="casos" required>
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -328,8 +328,18 @@
 			        window.location="datosmapas/obtenerDatosMapas/?mapa="+ mapa;
 			
 			        
-			    }
+			 }
 			
+			onload = function(){ 
+				  var ele = document.querySelectorAll('.validanumericos')[0];
+				  ele.onkeypress = function(e) {
+				     if(isNaN(this.value+String.fromCharCode(e.charCode)))
+				        return false;
+				  }
+				  ele.onpaste = function(e){
+				     e.preventDefault();
+				  }
+			}
 		</script>
 		<script>
 			$(document).ready(function() {
