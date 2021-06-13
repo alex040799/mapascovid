@@ -140,7 +140,7 @@
                               </div>
                               <div class="form-group">
                                  <label for="recipient-name" class="col-form-label">Poblacion:</label>
-                                 <input class="validanumericos" type=text id="poblacionEdit" name="poblacion" required>
+                                 <input class="form-control" type="text" onkeypress='return validaNumericos(event)' id="poblacionEdit" name="poblacion" required>
                               </div>
                               <div class="form-group">
                                  <label for="recipient-name" class="col-form-label">Provincia:</label>
@@ -220,16 +220,12 @@
       <script src="demo/demo.js"></script>
       <script>
          
-         onload = function(){ 
-				  var ele = document.querySelectorAll('.validanumericos')[0];
-				  ele.onkeypress = function(e) {
-				     if(isNaN(this.value+String.fromCharCode(e.charCode)))
-				        return false;
-				  }
-				  ele.onpaste = function(e){
-				     e.preventDefault();
-				  }
-				}
+	function validaNumericos(event) {
+	    if(event.charCode >= 48 && event.charCode <= 57){
+	      return true;
+	     }
+	     return false;        
+	}
          
          $(document).ready(function() {
            $().ready(function() {
@@ -409,7 +405,7 @@
       <!-- Custom scripts for all pages-->
       <script src="js/sb-admin-2.min.js"></script>
       <!-- Page level plugins -->
-      <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+      <!-- <script src="vendor/datatables/jquery.dataTables.min.js"></script> -->
       <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
       <!-- Page level custom scripts -->
       <script src="js/demo/datatables-demo.js"></script>
