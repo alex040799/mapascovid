@@ -118,50 +118,6 @@
                      </div>
                   </div>
                </div>
-               <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <form th:action="@{/orders/addNewOrder}" method="post">
-                     <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Nuevo Orden</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                              </button>
-                           </div>
-                           <div class="modal-body">
-                              <div class="form-group">
-                                 <label for="recipient-name" class="col-form-label">Numero:</label>
-                                 <input type="text" class="form-control" id="recipient-name" name="id" required>
-                              </div>
-                              <div class="form-group">
-                                 <label for="recipient-name" class="col-form-label">Fecha Orden:</label>
-                                 <input type="date" class="form-control" id="recipient-name" name="orderDate" required>
-                              </div>
-                              <div class="form-group">
-                                 <label for="recipient-name" class="col-form-label">Fecha Requerida:</label>
-                                 <input type="date" class="form-control" id="recipient-name" name="requiredDate" required>
-                              </div>
-                              <div class="form-group">
-                                 <label for="recipient-name" class="col-form-label">Fecha Compra:</label>
-                                 <input type="date" class="form-control" id="recipient-name" name="shippedDate" required>
-                              </div>
-                              <div class="form-group">
-                                 <label for="recipient-name" class="col-form-label">Estado:</label>
-                                 <input type="text" class="form-control" id="recipient-name" name="status" required>
-                              </div>
-                              <div class="form-group">
-                                 <label for="recipient-name" class="col-form-label">Numero Cliente:</label>
-                                 <input type="text" class="form-control" id="recipient-name" name="customernumber" required>
-                              </div>
-                           </div>
-                           <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                              <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                           </div>
-                        </div>
-                     </div>
-                  </form>
-               </div>
                <!-- Modal -->
                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
                   <form th:action="@{/localidades/updateLocalidad}" method="POST">
@@ -184,7 +140,7 @@
                               </div>
                               <div class="form-group">
                                  <label for="recipient-name" class="col-form-label">Poblacion:</label>
-                                 <input type="text" class="form-control" id="poblacionEdit" name="poblacion" required>
+                                 <input class="validanumericos" type=text id="poblacionEdit" name="poblacion" required>
                               </div>
                               <div class="form-group">
                                  <label for="recipient-name" class="col-form-label">Provincia:</label>
@@ -263,6 +219,18 @@
       <!-- Material Dashboard DEMO methods, don't include it in your project! -->
       <script src="demo/demo.js"></script>
       <script>
+         
+         onload = function(){ 
+				  var ele = document.querySelectorAll('.validanumericos')[0];
+				  ele.onkeypress = function(e) {
+				     if(isNaN(this.value+String.fromCharCode(e.charCode)))
+				        return false;
+				  }
+				  ele.onpaste = function(e){
+				     e.preventDefault();
+				  }
+				}
+         
          $(document).ready(function() {
            $().ready(function() {
              $sidebar = $('.sidebar');
