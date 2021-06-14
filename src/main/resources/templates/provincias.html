@@ -84,8 +84,6 @@
                            <h4 class="card-title ">Datos Provincias</h4>
                         </div>
                         <div class="card-body">
-                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" >Nueva provincia</button>
-                           <br></br>
                            <div class="table-responsive">
                               <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                  <thead class="text-primary">
@@ -119,39 +117,6 @@
                      </div>
                   </div>
                </div>
-            </div>
-            <!-- Modal -->
-            <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-               <form th:action="@{/provincias/addNewProvincia}" method="post">
-                  <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                           <h5 class="modal-title" id="exampleModalLabel">Nueva provincia</h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span>
-                           </button>
-                        </div>
-                        <div class="modal-body">
-                           <div class="form-group">
-                              <label for="recipient-name" class="col-form-label">Nombre:</label>
-                              <input type="text" class="form-control" id="recipient-name" name="nombre" required>
-                           </div>
-                           <div class="form-group">
-                              <label for="recipient-name" class="col-form-label">Latitud:</label>
-                              <input type="text" class="form-control" id="recipient-name" name="latitud" required>
-                           </div>
-                           <div class="form-group">
-                              <label for="recipient-name" class="col-form-label">Longitud:</label>
-                              <input type="texy" class="form-control" id="recipient-name" name="longitud" required>
-                           </div>
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                           <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                        </div>
-                     </div>
-                  </div>
-               </form>
             </div>
             <!-- Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
